@@ -1,46 +1,80 @@
 #! /usr/bin/env bash
-
-[ "$UID" -eq 0 ] || exec sudo "$0" "$@"
-
-apt install sudo
-
-/sbin/usermod -aG sudo orveus
-
-su - orveus
-
-sudo apt remove docker docker-engine docker.io containerd runc
+echo "updating repository info"
 
 sudo apt update
+
+echo "installing docker dependencies"
 
 sudo apt install ca-certificates curl gnupg lsb-release
 
+echo "loading docker repository keys"
+
 curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+echo "installing docker repository keys and installing docker repository"
 
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
+echo "updating repository info"
+
 sudo apt update
+
+echo "installing docker"
 
 sudo apt install docker-ce docker-ce-cli containerd.io
 
+echo "downloading docker-compose"
+
 sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+echo "setting execution right to docker compose"
 
 sudo chmod +x /usr/local/bin/docker-compose
 
-sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+echo "link docker compose to usr bin"
 
-mkdir ssl
+sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose || echo "docker compose is already linked"
 
-copy ssl_certificate.crt
-copy ssl_certificate.key
+echo "creating ssl dir"
 
-mkdir database
+mkdir ssl || "ssl directory exists already"
+
+cd ssl
+
+echo "downloading dummy certificate.crt"
+
+curl https://raw.githubusercontent.com/domschmidt/orveus-deploy/main/ssl/ssl_certificate.crt > ssl_certificate.crt
+
+echo "downloading dummy certificate.key"
+
+curl https://raw.githubusercontent.com/domschmidt/orveus-deploy/main/ssl/ssl_certificate.key > ssl_certificate.key
+
+cd ..
+
+echo "downloading docker-compose.yml"
+
+curl https://raw.githubusercontent.com/domschmidt/orveus-deploy/main/debian/docker-compose.yml > docker-compose.yml
+
+echo "requesting docker login"
 
 sudo docker login
-orveus 8RRt5qU3BP47xVaH
 
-sudo docker-compose up
+echo "docker-compose up"
+
+sudo docker-compose up -d
+
+echo "services running"
+
+mkdir database || echo "database directory exists already"
+
+echo "ready to start"
+
+echo "docker-compose up"
+
+sudo docker-compose up -d
+
+echo "applying rights"
 
 sudo chown -R $(sudo docker exec orveus-db id -u) database
 
-command: /bin/sh -c "(/opt/mssql/bin/sqlservr &) && sleep 10s && /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $${SA_PASSWORD} -d master -Q 'CREATE DATABASE orveus;' && sleep infinity"
-
+echo "done"
