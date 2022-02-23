@@ -49,6 +49,14 @@ echo "downloading dummy certificate.key"
 
 curl https://raw.githubusercontent.com/domschmidt/orveus-deploy/main/ssl/ssl_certificate.key > ssl_certificate.key
 
+echo "downloading backup script"
+
+curl https://raw.githubusercontent.com/domschmidt/orveus-deploy/main/debian/backup.sh > backup.sh
+
+echo "downloading restore script"
+
+curl https://raw.githubusercontent.com/domschmidt/orveus-deploy/main/debian/restore.sh > restore.sh
+
 cd ..
 
 echo "downloading docker-compose.yml"
