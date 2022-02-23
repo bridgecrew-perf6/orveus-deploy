@@ -67,13 +67,11 @@ echo "requesting docker login"
 
 sudo docker login
 
+mkdir database || echo "database directory exists already"
+
 echo "docker-compose up"
 
 sudo docker-compose up -d
-
-echo "services running"
-
-mkdir database || echo "database directory exists already"
 
 echo "ready to start"
 
