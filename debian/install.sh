@@ -21,7 +21,7 @@ sudo apt update
 
 echo "installing docker"
 
-sudo apt install docker-ce docker-ce-cli containerd.io
+sudo apt -y install docker-ce docker-ce-cli containerd.io
 
 echo "downloading docker-compose"
 
