@@ -1,10 +1,5 @@
 #! /usr/bin/env bash
 
-# fail on errors
-set -e
-
-[ "$UID" -eq 0 ] || exec sudo "$0" "$@"
-
 CONTAINER_NAME=orveus-db
 DATABASE_NAME=orveus
 PW=

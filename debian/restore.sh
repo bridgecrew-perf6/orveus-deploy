@@ -1,11 +1,8 @@
 #! /usr/bin/env bash
-
-[ "$UID" -eq 0 ] || exec sudo "$0" "$@"
-
 FILE_NAME=$1
 CONTAINER_NAME=orveus-db
 DATABASE_NAME=orveus
-PW=Z87hQ2vQtNt9xq5UMUa6DVD5N
+PW=
 RESTORE_FILE_NAME=$(date +%Y-%m-%d_%H_%M_%S.$DATABASE_NAME.bak)
 
 echo "Restoring database '$DATABASE_NAME' from file '$FILE_NAME' to container '$CONTAINER_NAME'..."
