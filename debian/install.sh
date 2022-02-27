@@ -9,7 +9,7 @@ sudo apt -y install ca-certificates curl gnupg lsb-release
 
 echo "loading docker repository keys"
 
-curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+curl --retry 3 -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 
 echo "installing docker repository keys and installing docker repository"
 
@@ -25,7 +25,7 @@ sudo apt -y install docker-ce docker-ce-cli containerd.io
 
 echo "downloading docker-compose"
 
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo --retry 3 curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
 echo "setting execution right to docker compose"
 
@@ -41,27 +41,27 @@ mkdir ssl || "ssl directory exists already"
 
 echo "downloading dummy certificate.crt"
 
-curl https://raw.githubusercontent.com/domschmidt/orveus-deploy/main/ssl/ssl_certificate.crt > ssl/ssl_certificate.crt
+curl --retry 3 https://raw.githubusercontent.com/domschmidt/orveus-deploy/main/ssl/ssl_certificate.crt > ssl/ssl_certificate.crt
 
 echo "downloading dummy certificate.key"
 
-curl https://raw.githubusercontent.com/domschmidt/orveus-deploy/main/ssl/ssl_certificate.key > ssl/ssl_certificate.key
+curl --retry 3 https://raw.githubusercontent.com/domschmidt/orveus-deploy/main/ssl/ssl_certificate.key > ssl/ssl_certificate.key
 
 echo "downloading backup script"
 
-curl https://raw.githubusercontent.com/domschmidt/orveus-deploy/main/debian/backup.sh > backup.sh
+curl --retry 3 https://raw.githubusercontent.com/domschmidt/orveus-deploy/main/debian/backup.sh > backup.sh
 
 sudo chmod +x backup.sh
 
 echo "downloading restore script"
 
-curl https://raw.githubusercontent.com/domschmidt/orveus-deploy/main/debian/restore.sh > restore.sh
+curl --retry 3 https://raw.githubusercontent.com/domschmidt/orveus-deploy/main/debian/restore.sh > restore.sh
 
 sudo chmod +x restore.sh
 
 echo "downloading docker-compose.yml"
 
-curl https://raw.githubusercontent.com/domschmidt/orveus-deploy/main/debian/docker-compose.yml > docker-compose.yml
+curl --retry 3 https://raw.githubusercontent.com/domschmidt/orveus-deploy/main/debian/docker-compose.yml > docker-compose.yml
 
 echo "requesting docker login"
 

@@ -31,4 +31,4 @@ SMTP_SUBJECT="ORVEUS / Backup erfolgreich / $(date +'%d.%m.%Y %H:%M')"
 FILE_STATS=$(stat ./backups/$FILE_NAME)
 SMTP_BODY="Die Sicherung für ORVEUS wurde erfolgreich erstellt.\n\n\nSicherungspfad: $CURR_DIR/backups/$FILE_NAME\n\n\nInformationen:\n$FILE_STATS"
 
-curl --url "$SMTP_ADDR" --ssl-reqd --mail-from "$SMTP_FROM" --mail-rcpt "$SMTP_TO" --user "$SMTP_AUTH" -T <(echo -e "From: $SMTP_FROM\nTo: $SMTP_TO\nSubject: $SMTP_SUBJECT\n$SMTP_BODY")
+curl --retry 3 --url "$SMTP_ADDR" --ssl-reqd --mail-from "$SMTP_FROM" --mail-rcpt "$SMTP_TO" --user "$SMTP_AUTH" -T <(echo -e "From: $SMTP_FROM\nTo: $SMTP_TO\nSubject: $SMTP_SUBJECT\n$SMTP_BODY")
