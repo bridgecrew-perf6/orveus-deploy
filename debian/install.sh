@@ -5,7 +5,7 @@ sudo apt update
 
 echo "installing docker dependencies"
 
-sudo apt install ca-certificates curl gnupg lsb-release
+sudo apt -y install ca-certificates curl gnupg lsb-release
 
 echo "loading docker repository keys"
 
@@ -69,18 +69,20 @@ sudo docker login
 
 mkdir database || echo "database directory exists already"
 
-echo "docker-compose up"
+echo "prepare orveus-db permissions"
 
-sudo docker-compose up -d
+sudo docker-compose up --no-start
 
-echo "ready to start"
-
-echo "docker-compose up"
-
-sudo docker-compose up -d
+sudo docker start orveus-db
 
 echo "applying rights"
 
 sudo chown -R $(sudo docker exec orveus-db id -u) database
+
+sudo docker-compose stop
+
+echo "docker-compose up"
+
+sudo docker-compose up -d
 
 echo "done"
