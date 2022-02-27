@@ -39,25 +39,25 @@ echo "creating ssl dir"
 
 mkdir ssl || "ssl directory exists already"
 
-cd ssl
-
 echo "downloading dummy certificate.crt"
 
-curl https://raw.githubusercontent.com/domschmidt/orveus-deploy/main/ssl/ssl_certificate.crt > ssl_certificate.crt
+curl https://raw.githubusercontent.com/domschmidt/orveus-deploy/main/ssl/ssl_certificate.crt > ssl/ssl_certificate.crt
 
 echo "downloading dummy certificate.key"
 
-curl https://raw.githubusercontent.com/domschmidt/orveus-deploy/main/ssl/ssl_certificate.key > ssl_certificate.key
+curl https://raw.githubusercontent.com/domschmidt/orveus-deploy/main/ssl/ssl_certificate.key > ssl/ssl_certificate.key
 
 echo "downloading backup script"
 
 curl https://raw.githubusercontent.com/domschmidt/orveus-deploy/main/debian/backup.sh > backup.sh
 
+sudo chmod +x backup.sh
+
 echo "downloading restore script"
 
 curl https://raw.githubusercontent.com/domschmidt/orveus-deploy/main/debian/restore.sh > restore.sh
 
-cd ..
+sudo chmod +x restore.sh
 
 echo "downloading docker-compose.yml"
 
