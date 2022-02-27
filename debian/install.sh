@@ -25,7 +25,7 @@ sudo apt -y install docker-ce docker-ce-cli containerd.io
 
 echo "downloading docker-compose"
 
-sudo --retry 3 curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo curl -L --retry 3 "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
 echo "setting execution right to docker compose"
 
