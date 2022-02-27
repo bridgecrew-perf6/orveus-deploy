@@ -7,7 +7,7 @@ set -e
 
 CONTAINER_NAME=orveus-db
 DATABASE_NAME=orveus
-PW=Z87hQ2vQtNt9xq5UMUa6DVD5N
+PW=
 
 # Create a file name for the backup based on the current date and time
 FILE_NAME=$(date +%Y-%m-%d_%H_%M_%S.$DATABASE_NAME.bak)
